@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SkinMatcha</title>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e3fdfd, #ffe6fa);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        body::before {
+  content: "";
+  background: url("images/2149168538.jpg") no-repeat center center fixed;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.2; /* Adjust opacity (0.0 - 1.0) */
+  z-index: -1; /* Ensure it's behind the content */
+}
+
+        /* Container Styling */
+        .form-container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        /* Logo Styling */
+        .logimg {
+            margin-bottom: 1rem;
+        }
+
+        .logimg img {
+            max-width: 80px;
+            border-radius: 8px;
+        }
+
+        /* Form Header */
+        .form-container h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            color: #333;
+        }
+
+        /* Input Fields */
+        .form-container label {
+            display: block;
+            text-align: left;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-container input:focus {
+            border-color: #6BCF93;
+            outline: none;
+        }
+
+        /* Login Button */
+        .form-container button {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            background: #010302;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .form-container button:hover {
+            background: #646f69;
+        }
+
+        /* Additional Text and Links */
+        .form-container p {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .form-container a {
+            color: #080a09;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .form-container a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        footer a {
+            color: #6BCF93;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 1.5rem;
+            }
+
+            .form-container h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Form -->
+    <div class="form-container">
+        <div class="logimg">
+            <img src="images/logreg.jfif" alt="SkinMatcha Logo">
+        </div>
+        <h1>Welcome Back!</h1>
+        <form action="login_process.php" method="POST">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="register.html">Register here</a></p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <a href="features.html">Features</a>  | <a href="index.html">Home</a>
+    </footer>
+
+</body>
+</html>

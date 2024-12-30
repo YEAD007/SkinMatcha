@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinQuiz - SkinMatcha</title>
+    <link rel="stylesheet" href="style1.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f3e7e9, #e3fdfd);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: #e8eeeb;
+            color: #000;
+            text-align: center;
+            padding: 1.2rem 0;
+            font-size: 1.8rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question h2 {
+            font-size: 1.2rem;
+            color: #444;
+        }
+
+        .quiz-question ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quiz-question ul li label {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+            cursor: pointer;
+        }
+
+        .quiz-question ul li input {
+            margin-right: 0.75rem;
+        }
+
+        .submit-btn, .match-btn {
+            display: block;
+            width: 100%;
+            max-width: 250px;
+            margin: 2rem auto;
+            padding: 0.75rem;
+            background: #6BCF93;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover, .match-btn:hover {
+            background: #5CAF82;
+        }
+
+        .match-results {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #e8f5e9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        footer a {
+            color: #6BCF93;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        SkinQuiz - SkinMatcha
+    </header>
+
+    <!-- Quiz Container -->
+    <div class="container">
+        <section class="quiz-question">
+            <h2>1. What is your name?</h2>
+            <input type="text" id="user-name" placeholder="Enter your name" required>
+        </section>
+        <section class="quiz-question">
+            <h2>2. What is your skin type?</h2>
+            <ul>
+                <li><label><input type="radio" name="q1" value="Oily"> Oily</label></li>
+                <li><label><input type="radio" name="q1" value="Dry"> Dry</label></li>
+                <li><label><input type="radio" name="q1" value="Combination"> Combination</label></li>
+                <li><label><input type="radio" name="q1" value="Sensitive"> Sensitive</label></li>
+            </ul>
+        </section>
+        <button class="submit-btn">Submit Quiz</button>
+        <button class="match-btn" style="display:none;">View Matched Users</button>
+        <div class="match-results" style="display:none;"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <a href="features.html">Features</a> | <a href="index.html">Home</a>
+    </footer>
+
+    <script>
+        const submitBtn = document.querySelector('.submit-btn');
+        const matchBtn = document.querySelector('.match-btn');
+        const matchResults = document.querySelector('.match-results');
+        const userNameInput = document.querySelector('#user-name');
+
+        function getQuizAnswers() {
+            return {
+                name: userNameInput.value,
+                skinType: document.querySelector('input[name="q1"]:checked')?.value || null
+            };
+        }
+
+        function saveQuizAnswers() {
+            const answers = getQuizAnswers();
+            if (!answers.name || !answers.skinType) {
+                alert('Please answer all questions!');
+                return;
+            }
+            
+            let users = JSON.parse(localStorage.getItem('quizUsers')) || [];
+            users.push(answers);
+            localStorage.setItem('quizUsers', JSON.stringify(users));
+            alert('Quiz submitted successfully!');
+            checkForMatch(answers);
+        }
+
+        function checkForMatch(currentUser) {
+            let users = JSON.parse(localStorage.getItem('quizUsers')) || [];
+            let matchedUsers = users.filter(user => user.skinType === currentUser.skinType);
+
+            if (matchedUsers.length > 1) {
+                matchBtn.style.display = 'block';
+                matchBtn.addEventListener('click', () => {
+                    localStorage.setItem('matchedUsers', JSON.stringify(matchedUsers));
+                    window.location.href = 'skinmatcha.html';
+                });
+            } else {
+                alert('No matches found yet.');
+            }
+        }
+
+        submitBtn.addEventListener('click', saveQuizAnswers);
+    </script>
+
+    <footer>
+        <a href="features.html">Features</a>  | <a href="index.html">Home</a>
+    </footer>
+</body>
+</html>

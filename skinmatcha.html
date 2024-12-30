@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matched Users - SkinMatcha</title>
+    <link rel="stylesheet" href="style1.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8fafc;
+         
+        }
+
+body::before {
+  content: "";
+  background: url("images/24790.jpg") no-repeat center center fixed;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.15; /* Adjust opacity (0.0 - 1.0) */
+  z-index: -1; /* Ensure it's behind the content */
+}
+
+        header {
+            background-color: #e1ede6;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 0.3rem;
+        }
+
+        .matched-users {
+            padding: 1rem;
+            margin: 2rem;
+        }
+
+        .user {
+            background: #fff;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .user h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .user p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .submit-btn, .match-btn {
+            display: block;
+            width: 100%;
+            max-width: 250px;
+            margin: 2rem auto;
+            padding: 0.75rem;
+            background: #6BCF93;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover, .match-btn:hover {
+            background: #5CAF82;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Matched Users</h1>
+    </header>
+
+    <div class="matched-users" id="matched-users">
+        <!-- Matched users will be displayed here -->
+    </div>
+
+    <script>
+        // Retrieve the matched users from localStorage
+        const matchedUsers = JSON.parse(localStorage.getItem('matchedUsers')) || [];
+        const matchedUsersSection = document.getElementById('matched-users');
+
+        if (matchedUsers.length > 0) {
+            matchedUsers.forEach(user => {
+                const userDiv = document.createElement('div');
+                userDiv.classList.add('user');
+                userDiv.innerHTML = `
+                    <h3>${user.name}</h3>
+                    <p>Skin Type: ${user.skinType}</p>
+                `;
+                matchedUsersSection.appendChild(userDiv);
+            });
+        } else {
+            matchedUsersSection.innerHTML = '<p>No matched users found.</p>';
+        }
+    </script>
+
+    <footer>
+        <a href="features.html">Features</a>  | <a href="index.html">Home</a>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkinCare Routine - SkinMatcha</title>
+    <link rel="stylesheet" href="style1.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f8fafc, #e6f7f1);
+            color: #333;
+        }
+
+        header {
+            background-color: #e1ede6;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 150px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background-color: #c77dcc;
+            color: rgb(235, 230, 230);
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #7a2177;
+        }
+
+        .routine-list {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .routine-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #eef7f2;
+            border-radius: 8px;
+        }
+
+        .routine-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .routine-item p {
+            margin: 0.25rem 0;
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        footer a {
+            color: #ebf0ed;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        Daily SkinCare Routine
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <form id="routine-form">
+            <div class="form-group">
+                <label for="user-name">Name:</label>
+                <input type="text" id="user-name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="skin-type">Skin Type:</label>
+                <select id="skin-type" required>
+                    <option value="">Select Skin Type</option>
+                    <option value="Oily">Oily</option>
+                    <option value="Dry">Dry</option>
+                    <option value="Combination">Combination</option>
+                    <option value="Sensitive">Sensitive</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="daily-routine">Daily Routine:</label>
+                <textarea id="daily-routine" placeholder="Describe your daily skincare routine"></textarea>
+            </div>
+
+            <button type="button" class="btn" id="save-btn">Save Routine</button>
+        </form>
+
+        <!-- Display Saved Routines -->
+        <div class="routine-list" id="routine-list">
+            <h3>Saved Routines</h3>
+            <!-- Routines will be displayed here -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <a href="features.html">Features</a> | <a href="index.html">Home</a>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        const saveBtn = document.getElementById('save-btn');
+        const routineList = document.getElementById('routine-list');
+
+        function saveRoutine() {
+            const name = document.getElementById('user-name').value.trim();
+            const skinType = document.getElementById('skin-type').value;
+            const routine = document.getElementById('daily-routine').value.trim();
+
+            if (!name || !skinType || !routine) {
+                alert('Please fill out all fields before saving!');
+                return;
+            }
+
+            const userRoutine = {
+                name,
+                skinType,
+                routine,
+            };
+
+            let routines = JSON.parse(localStorage.getItem('userRoutines')) || [];
+            routines.push(userRoutine);
+            localStorage.setItem('userRoutines', JSON.stringify(routines));
+
+            alert('Routine saved successfully!');
+            displayRoutines();
+            document.getElementById('routine-form').reset();
+        }
+
+        function displayRoutines() {
+            routineList.innerHTML = '<h3>Saved Routines</h3>';
+
+            let routines = JSON.parse(localStorage.getItem('userRoutines')) || [];
+
+            if (routines.length === 0) {
+                routineList.innerHTML += '<p>No routines saved yet.</p>';
+                return;
+            }
+
+            routines.forEach((routine, index) => {
+                const routineItem = document.createElement('div');
+                routineItem.classList.add('routine-item');
+                routineItem.innerHTML = `
+                    <h4>${routine.name}</h4>
+                    <p><strong>Skin Type:</strong> ${routine.skinType}</p>
+                    <p><strong>Routine:</strong> ${routine.routine}</p>
+                    <button onclick="deleteRoutine(${index})" class="btn" style="background:#FF6B6B; margin-top: 0.5rem;">Delete</button>
+                `;
+                routineList.appendChild(routineItem);
+            });
+        }
+
+        function deleteRoutine(index) {
+            let routines = JSON.parse(localStorage.getItem('userRoutines')) || [];
+            routines.splice(index, 1);
+            localStorage.setItem('userRoutines', JSON.stringify(routines));
+            displayRoutines();
+        }
+
+        saveBtn.addEventListener('click', saveRoutine);
+        window.addEventListener('load', displayRoutines);
+    </script>
+
+    <footer>
+        <a href="features.html">Features</a>  | <a href="index.html">Home</a>
+    </footer>
+</body>
+</html>
